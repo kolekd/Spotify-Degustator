@@ -82,7 +82,7 @@ public class SpotifyService {
 
     // TODO - PROGRESS
     public Track getTrack(String id) {
-        final String uri = spotifyApiBaseUrl + "/tracks" + id;
+        final String uri = spotifyApiBaseUrl + "/tracks/" + id;
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity httpEntity = httpEntityWithHeaders();
