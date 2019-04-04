@@ -1,4 +1,4 @@
-package com.rohlik.spotify_degustator.model;
+package com.rohlik.spotify_degustator.model.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

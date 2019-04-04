@@ -1,17 +1,36 @@
 package com.rohlik.spotify_degustator.service;
 
-import com.rohlik.spotify_degustator.model.Artist;
-import com.rohlik.spotify_degustator.model.TokenResponse;
+import com.rohlik.spotify_degustator.model.spotifyModels.Paging;
+import com.rohlik.spotify_degustator.model.spotifyModels.Artist;
+import com.rohlik.spotify_degustator.model.response.TokenResponse;
+import com.rohlik.spotify_degustator.storage.LocalStorage;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
+@Slf4j
 public class SpotifyService {
 
-    private String token;
+    LocalStorage localStorage;
+
+    @Autowired
+    public SpotifyService(LocalStorage localStorage) {
+        this.localStorage = localStorage;
+    }
+
+    public HttpEntity httpEntityWithHeaders() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setBearerAuth(localStorage.getToken());
+        return new HttpEntity("parameters", httpHeaders);
+    }
 
     public void authorize() {
         final String uri = "https://accounts.spotify.com/api/token";
@@ -26,30 +45,56 @@ public class SpotifyService {
 
         HttpEntity httpEntity = new HttpEntity(form, httpHeaders);
 
+        log.info("Requesting token.");
         ResponseEntity<TokenResponse> response = restTemplate.postForEntity(uri, httpEntity, TokenResponse.class);
-
-        System.out.println(response.getBody().getAccess_token());
+        log.info("Saving token.");
+        localStorage.setToken(response.getBody().getAccess_token());
     }
 
     public Artist getArtist(String id){
         final String uri = "https://api.spotify.com/v1/artists/" + id;
 
         RestTemplate restTemplate = new RestTemplate();
+        HttpEntity httpEntity = httpEntityWithHeaders();
+
+        log.info("Requesting artist ID: " + id + ".");
+        ResponseEntity<Artist> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, Artist.class);
+        log.info("Retrieved artist ID: " + id + ".");
+
+        return response.getBody();
+    }
+
+    // TODO - PROGRESS
+    public Paging getAlbumsByArtist(String id) {
+        final String uri = "https://api.spotify.com/v1/artists/" + id + "/albums";
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity httpEntity = httpEntityWithHeaders();
+
+        log.info("Requesting track ID: " + id + ".");
+        ResponseEntity<Paging> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, Paging.class);
+        log.info("Retrieved track ID: " + id + ".");
+
+        return response.getBody();
+    }
+
+    // TODO
+    public List<Artist> searchArtist(String name) {
+        final String uri = "https://api.spotify.com/v1/artists/"; // Find correct endpoint
+
+        RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setBearerAuth("BQBXo2lmfiMCvURqzwXNIfsB1-aO0G2USQiaUqkl_JjV_sPSCUfWDLzBQj6LI3gMMfbgvIrWAzAAkp9MNFc");
-        HttpEntity httpEntity = new HttpEntity("parameters", httpHeaders);
+        httpHeaders.setBearerAuth(localStorage.getToken());
+//        HttpEntity httpEntity = new HttpEntity();
 
-        ResponseEntity<Artist> result = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, Artist.class);
+        log.info("Searching artists by name: " + name + ".");
+//        ResponseEntity<List<Artist>> response = restTemplate.exchange()
+//        log.info("Found " + response + " artists.");
 
-        return result.getBody();
+//        return response.getBody();
+        return new ArrayList<>();
     }
 
-    public String getToken() {
-        return token;
-    }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
 }

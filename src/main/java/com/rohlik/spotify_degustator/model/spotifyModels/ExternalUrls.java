@@ -1,4 +1,4 @@
-package com.rohlik.spotify_degustator.model;
+package com.rohlik.spotify_degustator.model.spotifyModels;
 
 import lombok.Data;
 
