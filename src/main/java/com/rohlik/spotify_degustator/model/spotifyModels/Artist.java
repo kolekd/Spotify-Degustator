@@ -9,27 +9,36 @@ import java.util.List;
 @Data
 public class Artist {
 
-    String id;
-    String name;
-    List<String> genres = new ArrayList<>();
     @JsonProperty("external_urls")
     ExternalUrls externalUrls;
-    Followers followers = new Followers();
+    Followers followers;
+    List<String> genres;
     String href;
-    List<Image> images = new ArrayList<>();
+    String id;
+    List<Image> images;
+    String name;
     int popularity;
     String type;
     String uri;
 
-    public Artist(String id, String name, List<String> genres, ExternalUrls externalUrls, Followers followers, String href, List<Image> images, int popularity, String type, String uri) {
-        this.id = id;
-        this.name = name;
-        this.genres = genres;
+    public Artist(ExternalUrls externalUrls, Followers followers, List<String> genres, String href, String id, List<Image> images, String name, int popularity, String type, String uri) {
         this.externalUrls = externalUrls;
         this.followers = followers;
+        this.genres = genres;
         this.href = href;
+        this.id = id;
         this.images = images;
+        this.name = name;
         this.popularity = popularity;
+        this.type = type;
+        this.uri = uri;
+    }
+
+    public Artist(ExternalUrls externalUrls, String href, String id, String name, String type, String uri) {
+        this.externalUrls = externalUrls;
+        this.href = href;
+        this.id = id;
+        this.name = name;
         this.type = type;
         this.uri = uri;
     }

@@ -1,17 +1,16 @@
 package com.rohlik.spotify_degustator.model.spotifyModels;
 
+import com.rohlik.spotify_degustator.model.paging.PagingArtists;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class SearchArtistResult {
 
-    Paging artists;
+    PagingArtists artists;
 
     public SearchArtistResult() {}
 
-    public SearchArtistResult(Paging artists) {
+    public SearchArtistResult(PagingArtists artists) {
         this.artists = artists;
     }
 }

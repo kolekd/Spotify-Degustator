@@ -1,7 +1,8 @@
 package com.rohlik.spotify_degustator.rest;
 
 
-import com.rohlik.spotify_degustator.model.spotifyModels.Paging;
+import com.rohlik.spotify_degustator.model.DegustatorArtist;
+import com.rohlik.spotify_degustator.model.paging.PagingParent;
 import com.rohlik.spotify_degustator.model.spotifyModels.Artist;
 import com.rohlik.spotify_degustator.model.spotifyModels.Track;
 import com.rohlik.spotify_degustator.storage.LocalStorage;
@@ -38,7 +39,7 @@ public class SpotifyAPI {
     }
 
     @GetMapping("/artist/{id}/albums")
-    public Paging getAlbumsByArtist(@PathVariable String id) {
+    public PagingParent getAlbumsByArtist(@PathVariable String id) {
         return spotifyService.getAlbumsByArtist(id);
     }
 
@@ -48,12 +49,17 @@ public class SpotifyAPI {
     }
 
     @GetMapping("/album/{id}/tracks")
-    public List<Object> getTracksFromAlbum(@PathVariable String id) {
+    public List<Track> getTracksFromAlbum(@PathVariable String id) {
         return spotifyService.getTracksFromAlbum(id);
     }
 
+    @GetMapping("/artist-and-album/{id}")
+    public DegustatorArtist getArtistAndAlbums(@PathVariable String id) {
+        return spotifyService.getArtistAndAlbums(id);
+    }
+
     @GetMapping("/search-artists/{name}")
-    public List<Object> searchArtists(@PathVariable String name) {
+    public List<Artist> searchArtists(@PathVariable String name) {
         return spotifyService.searchArtist(name);
     }
 

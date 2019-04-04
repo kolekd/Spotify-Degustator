@@ -9,14 +9,14 @@ public class TrackLink {
     String id;
 
     @JsonProperty("external_urls")
-    KeyValueObject externalUrls;
+    ExternalUrls externalUrls;
     String href;
     String type;
     String uri;
 
     public TrackLink() {}
 
-    public TrackLink(String id, KeyValueObject externalUrls, String href, String type, String uri) {
+    public TrackLink(String id, ExternalUrls externalUrls, String href, String type, String uri) {
         this.id = id;
         this.externalUrls = externalUrls;
         this.href = href;

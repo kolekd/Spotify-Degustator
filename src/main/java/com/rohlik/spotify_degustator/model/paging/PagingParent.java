@@ -1,4 +1,4 @@
-package com.rohlik.spotify_degustator.model.spotifyModels;
+package com.rohlik.spotify_degustator.model.paging;
 
 import lombok.Data;
 
@@ -6,21 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class Paging {
+public class PagingParent {
 
     String href;
-    List<Object> items = new ArrayList<>();
     int limit;
     String next;
     int offset;
     String previous;
     int total;
 
-    public Paging() {}
+    public PagingParent() {}
 
-    public Paging(String href, List<Object> items, int limit, String next, int offset, String previous, int total) {
+    public PagingParent(String href, int limit, String next, int offset, String previous, int total) {
         this.href = href;
-        this.items = items;
         this.limit = limit;
         this.next = next;
         this.offset = offset;

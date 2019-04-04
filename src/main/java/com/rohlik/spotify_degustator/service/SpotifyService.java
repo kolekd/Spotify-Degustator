@@ -1,6 +1,11 @@
 package com.rohlik.spotify_degustator.service;
 
-import com.rohlik.spotify_degustator.model.spotifyModels.Paging;
+import com.rohlik.spotify_degustator.model.DegustatorAlbum;
+import com.rohlik.spotify_degustator.model.DegustatorArtist;
+import com.rohlik.spotify_degustator.model.paging.PagingAlbums;
+import com.rohlik.spotify_degustator.model.paging.PagingObjects;
+import com.rohlik.spotify_degustator.model.paging.PagingTracks;
+import com.rohlik.spotify_degustator.model.spotifyModels.Album;
 import com.rohlik.spotify_degustator.model.spotifyModels.Artist;
 import com.rohlik.spotify_degustator.model.response.TokenResponse;
 import com.rohlik.spotify_degustator.model.spotifyModels.SearchArtistResult;
@@ -68,14 +73,14 @@ public class SpotifyService {
         return response.getBody();
     }
 
-    public Paging getAlbumsByArtist(String id) {
+    public PagingAlbums getAlbumsByArtist(String id) {
         final String uri = spotifyApiBaseUrl + "/artists/" + id + "/albums";
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity httpEntity = httpEntityWithHeaders();
 
         log.info("Requesting albums from artist ID: " + id + ".");
-        ResponseEntity<Paging> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, Paging.class);
+        ResponseEntity<PagingAlbums> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, PagingAlbums.class);
         log.info("Retrieved albums from artist ID: " + id + ".");
 
         return response.getBody();
@@ -92,18 +97,28 @@ public class SpotifyService {
         return response.getBody();
     }
 
-    public List<Object> getTracksFromAlbum(String id) {
+    public List<Track> getTracksFromAlbum(String id) {
         final String uri = spotifyApiBaseUrl + "/albums/" + id + "/tracks";
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity httpEntity = httpEntityWithHeaders();
 
-        ResponseEntity<Paging> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, Paging.class);
+        ResponseEntity<PagingTracks> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, PagingTracks.class);
 
         return response.getBody().getItems();
     }
 
-    public List<Object> searchArtist(String name) {
+    public DegustatorArtist getArtistAndAlbums(String id) {
+        List<DegustatorAlbum> degustatorAlbums = new ArrayList<>();
+
+        for (Album album : getAlbumsByArtist(id).getItems()) {
+            degustatorAlbums.add(new DegustatorAlbum(album.getId(), album.getName(), getTracksFromAlbum(album.getId())));
+        }
+
+        return localStorage.saveArtist(getArtist(id), degustatorAlbums);
+    }
+
+    public List<Artist> searchArtist(String name) {
         final String uri = spotifyApiBaseUrl + "/search?q=" + name + "&type=artist"; // Find correct endpoint
 
         RestTemplate restTemplate = new RestTemplate();
@@ -111,10 +126,15 @@ public class SpotifyService {
 
         log.info("Searching artists by name: \"" + name + "\" ...");
         ResponseEntity<SearchArtistResult> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, SearchArtistResult.class);
-        log.info("Search completed.");
+        List<Artist> artistList = response.getBody().getArtists().getItems();
+        log.info("Search completed. Found " + artistList.size() + " results.");
+
+        for (int i = 0; i < artistList.size(); i++) {
+            System.out.println(i + " Name: " + artistList.get(i).getName() +
+                    "  ID: " + artistList.get(i).getId());
+        }
 
         return response.getBody().getArtists().getItems();
     }
-
 
 }
