@@ -39,8 +39,8 @@ public class DegustatorAPI {
         return degustatorService.checkSavedArtist();
     }
 
-    // TODO
-    @PostMapping("/generate-playlist")
+    // TODO - PROGRESS
+    @GetMapping("/generate-playlist")
     public List<Track> generatePlaylist() {
         return degustatorService.generatePlaylist();
     }
