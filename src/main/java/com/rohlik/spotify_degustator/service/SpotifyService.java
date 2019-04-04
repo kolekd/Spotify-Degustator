@@ -103,8 +103,7 @@ public class SpotifyService {
         return response.getBody().getItems();
     }
 
-    // TODO - PROGRESS
-    public List<Artist> searchArtist(String name) {
+    public List<Object> searchArtist(String name) {
         final String uri = spotifyApiBaseUrl + "/search?q=" + name + "&type=artist"; // Find correct endpoint
 
         RestTemplate restTemplate = new RestTemplate();
@@ -114,7 +113,7 @@ public class SpotifyService {
         ResponseEntity<SearchArtistResult> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, SearchArtistResult.class);
         log.info("Search completed.");
 
-        return response.getBody().getArtists();
+        return response.getBody().getArtists().getItems();
     }
 
 

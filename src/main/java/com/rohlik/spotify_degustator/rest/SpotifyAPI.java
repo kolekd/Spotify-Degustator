@@ -52,9 +52,8 @@ public class SpotifyAPI {
         return spotifyService.getTracksFromAlbum(id);
     }
 
-    // TODO - PROGRESS
     @GetMapping("/search-artists/{name}")
-    public List<Artist> searchArtists(@PathVariable String name) {
+    public List<Object> searchArtists(@PathVariable String name) {
         return spotifyService.searchArtist(name);
     }
 
