@@ -42,7 +42,6 @@ public class SpotifyAPI {
         return spotifyService.getAlbumsByArtist(id);
     }
 
-    // TODO - PROGRESS
     @GetMapping("/track/{id}")
     public Track getTrack(@PathVariable String id) {
         return spotifyService.getTrack(id);
@@ -53,8 +52,7 @@ public class SpotifyAPI {
         return spotifyService.getTracksFromAlbum(id);
     }
 
-
-    // TODO
+    // TODO - PROGRESS
     @GetMapping("/search-artists/{name}")
     public List<Artist> searchArtists(@PathVariable String name) {
         return spotifyService.searchArtist(name);

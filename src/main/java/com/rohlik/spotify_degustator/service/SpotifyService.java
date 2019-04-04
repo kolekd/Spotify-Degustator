@@ -3,6 +3,7 @@ package com.rohlik.spotify_degustator.service;
 import com.rohlik.spotify_degustator.model.spotifyModels.Paging;
 import com.rohlik.spotify_degustator.model.spotifyModels.Artist;
 import com.rohlik.spotify_degustator.model.response.TokenResponse;
+import com.rohlik.spotify_degustator.model.spotifyModels.SearchArtistResult;
 import com.rohlik.spotify_degustator.model.spotifyModels.Track;
 import com.rohlik.spotify_degustator.storage.LocalStorage;
 import lombok.extern.slf4j.Slf4j;
@@ -80,7 +81,6 @@ public class SpotifyService {
         return response.getBody();
     }
 
-    // TODO - PROGRESS
     public Track getTrack(String id) {
         final String uri = spotifyApiBaseUrl + "/tracks/" + id;
 
@@ -103,22 +103,18 @@ public class SpotifyService {
         return response.getBody().getItems();
     }
 
-    // TODO
+    // TODO - PROGRESS
     public List<Artist> searchArtist(String name) {
-        final String uri = spotifyApiBaseUrl + "/artists/"; // Find correct endpoint
+        final String uri = spotifyApiBaseUrl + "/search?q=" + name + "&type=artist"; // Find correct endpoint
 
         RestTemplate restTemplate = new RestTemplate();
+        HttpEntity httpEntity = httpEntityWithHeaders();
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setBearerAuth(localStorage.getToken());
-//        HttpEntity httpEntity = new HttpEntity();
+        log.info("Searching artists by name: \"" + name + "\" ...");
+        ResponseEntity<SearchArtistResult> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, SearchArtistResult.class);
+        log.info("Search completed.");
 
-        log.info("Searching artists by name: " + name + ".");
-//        ResponseEntity<List<Artist>> response = restTemplate.exchange()
-//        log.info("Found " + response + " artists.");
-
-//        return response.getBody();
-        return new ArrayList<>();
+        return response.getBody().getArtists();
     }
 
 

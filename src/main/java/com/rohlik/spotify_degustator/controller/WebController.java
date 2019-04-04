@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class ArtistController {
+public class WebController {
 
     List<Artist> artistList = new ArrayList<>();
 
