@@ -3,6 +3,7 @@ package com.rohlik.spotify_degustator.service;
 import com.rohlik.spotify_degustator.model.spotifyModels.Paging;
 import com.rohlik.spotify_degustator.model.spotifyModels.Artist;
 import com.rohlik.spotify_degustator.model.response.TokenResponse;
+import com.rohlik.spotify_degustator.model.spotifyModels.Track;
 import com.rohlik.spotify_degustator.storage.LocalStorage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import java.util.List;
 public class SpotifyService {
 
     LocalStorage localStorage;
+
+    public static final String spotifyApiBaseUrl = "https://api.spotify.com/v1";
 
     @Autowired
     public SpotifyService(LocalStorage localStorage) {
@@ -52,7 +55,7 @@ public class SpotifyService {
     }
 
     public Artist getArtist(String id){
-        final String uri = "https://api.spotify.com/v1/artists/" + id;
+        final String uri = spotifyApiBaseUrl + "/artists/" + id;
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity httpEntity = httpEntityWithHeaders();
@@ -64,23 +67,45 @@ public class SpotifyService {
         return response.getBody();
     }
 
-    // TODO - PROGRESS
     public Paging getAlbumsByArtist(String id) {
-        final String uri = "https://api.spotify.com/v1/artists/" + id + "/albums";
+        final String uri = spotifyApiBaseUrl + "/artists/" + id + "/albums";
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity httpEntity = httpEntityWithHeaders();
 
-        log.info("Requesting track ID: " + id + ".");
+        log.info("Requesting albums from artist ID: " + id + ".");
         ResponseEntity<Paging> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, Paging.class);
-        log.info("Retrieved track ID: " + id + ".");
+        log.info("Retrieved albums from artist ID: " + id + ".");
 
         return response.getBody();
     }
 
+    // TODO - PROGRESS
+    public Track getTrack(String id) {
+        final String uri = spotifyApiBaseUrl + "/tracks" + id;
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity httpEntity = httpEntityWithHeaders();
+
+        ResponseEntity<Track> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, Track.class);
+
+        return response.getBody();
+    }
+
+    public List<Object> getTracksFromAlbum(String id) {
+        final String uri = spotifyApiBaseUrl + "/albums/" + id + "/tracks";
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity httpEntity = httpEntityWithHeaders();
+
+        ResponseEntity<Paging> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, Paging.class);
+
+        return response.getBody().getItems();
+    }
+
     // TODO
     public List<Artist> searchArtist(String name) {
-        final String uri = "https://api.spotify.com/v1/artists/"; // Find correct endpoint
+        final String uri = spotifyApiBaseUrl + "/artists/"; // Find correct endpoint
 
         RestTemplate restTemplate = new RestTemplate();
 

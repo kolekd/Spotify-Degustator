@@ -3,6 +3,7 @@ package com.rohlik.spotify_degustator.rest;
 
 import com.rohlik.spotify_degustator.model.spotifyModels.Paging;
 import com.rohlik.spotify_degustator.model.spotifyModels.Artist;
+import com.rohlik.spotify_degustator.model.spotifyModels.Track;
 import com.rohlik.spotify_degustator.storage.LocalStorage;
 import com.rohlik.spotify_degustator.service.SpotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +32,27 @@ public class SpotifyAPI {
         return ResponseEntity.ok("Authorization successful: Token retrieved.");
     }
 
-    @GetMapping("/artists/{id}")
+    @GetMapping("/artist/{id}")
     public Artist getArtist(@PathVariable String id) {
         return spotifyService.getArtist(id);
     }
 
-    @GetMapping("/albums/{id}")
-    public Paging getTrack(@PathVariable String id) {
+    @GetMapping("/artist/{id}/albums")
+    public Paging getAlbumsByArtist(@PathVariable String id) {
         return spotifyService.getAlbumsByArtist(id);
     }
+
+    // TODO - PROGRESS
+    @GetMapping("/track/{id}")
+    public Track getTrack(@PathVariable String id) {
+        return spotifyService.getTrack(id);
+    }
+
+    @GetMapping("/album/{id}/tracks")
+    public List<Object> getTracksFromAlbum(@PathVariable String id) {
+        return spotifyService.getTracksFromAlbum(id);
+    }
+
 
     // TODO
     @GetMapping("/search-artists/{name}")
