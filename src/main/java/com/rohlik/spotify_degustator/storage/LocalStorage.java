@@ -4,6 +4,7 @@ import com.rohlik.spotify_degustator.model.DegustatorAlbum;
 import com.rohlik.spotify_degustator.model.DegustatorArtist;
 import com.rohlik.spotify_degustator.model.spotifyModels.Album;
 import com.rohlik.spotify_degustator.model.spotifyModels.Artist;
+import com.rohlik.spotify_degustator.model.spotifyModels.Track;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,8 @@ public class LocalStorage {
 
     private String token;
     private DegustatorArtist artist;
+    private List<Track> trackList;
+    private Settings settings = new Settings();
 
     public LocalStorage() {}
 
@@ -47,5 +50,21 @@ public class LocalStorage {
 
     public void setArtist(DegustatorArtist artist) {
         this.artist = artist;
+    }
+
+    public List<Track> getTrackList() {
+        return trackList;
+    }
+
+    public void setTrackList(List<Track> trackList) {
+        this.trackList = trackList;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 }
