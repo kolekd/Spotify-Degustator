@@ -53,11 +53,6 @@ public class SpotifyAPI {
         return spotifyService.getTracksFromAlbum(id);
     }
 
-    @GetMapping("/artist-and-album/{id}")
-    public DegustatorArtist getArtistAndAlbums(@PathVariable String id) {
-        return spotifyService.getArtistAndAlbums(id);
-    }
-
     @GetMapping("/search-artists/{name}")
     public List<Artist> searchArtists(@PathVariable String name) {
         return spotifyService.searchArtist(name);

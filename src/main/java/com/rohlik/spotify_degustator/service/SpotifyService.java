@@ -108,16 +108,6 @@ public class SpotifyService {
         return response.getBody().getItems();
     }
 
-    public DegustatorArtist getArtistAndAlbums(String id) {
-        List<DegustatorAlbum> degustatorAlbums = new ArrayList<>();
-
-        for (Album album : getAlbumsByArtist(id).getItems()) {
-            degustatorAlbums.add(new DegustatorAlbum(album.getId(), album.getName(), getTracksFromAlbum(album.getId())));
-        }
-
-        return localStorage.saveArtist(getArtist(id), degustatorAlbums);
-    }
-
     public List<Artist> searchArtist(String name) {
         final String uri = spotifyApiBaseUrl + "/search?q=" + name + "&type=artist"; // Find correct endpoint
 

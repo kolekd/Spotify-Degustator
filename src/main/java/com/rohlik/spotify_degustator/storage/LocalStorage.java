@@ -22,19 +22,6 @@ public class LocalStorage {
 
     public LocalStorage() {}
 
-    public DegustatorArtist saveArtist(Artist artist, List<DegustatorAlbum> degustatorAlbums) {
-        log.info("Saving artist ID: " + artist.getId());
-
-        DegustatorArtist degustatorArtist = new DegustatorArtist(
-                artist.getId(), artist.getName(), degustatorAlbums
-        );
-
-        setArtist(degustatorArtist);
-        log.info("Saved artist ID: " + degustatorArtist.getId());
-
-        return degustatorArtist;
-    }
-
 
     public String getToken() {
         return token;

@@ -2,17 +2,17 @@ package com.rohlik.spotify_degustator.storage;
 
 public class Settings {
 
-    boolean onlyOneVersionOfSong;
+    boolean originalsOnly;
 
     public Settings() {
-        this.onlyOneVersionOfSong = true;
+        this.originalsOnly = true;
     }
 
-    public boolean isOnlyOneVersionOfSong() {
-        return onlyOneVersionOfSong;
+    public boolean isOriginalsOnly() {
+        return originalsOnly;
     }
 
-    public void setOnlyOneVersionOfSong(boolean onlyOneVersionOfSong) {
-        this.onlyOneVersionOfSong = onlyOneVersionOfSong;
+    public void setOriginalsOnly(boolean originalsOnly) {
+        this.originalsOnly = originalsOnly;
     }
 }

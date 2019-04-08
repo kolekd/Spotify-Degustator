@@ -4,6 +4,7 @@ import com.rohlik.spotify_degustator.model.DegustatorArtist;
 import com.rohlik.spotify_degustator.model.spotifyModels.Track;
 import com.rohlik.spotify_degustator.service.DegustatorService;
 import com.rohlik.spotify_degustator.storage.LocalStorage;
+import com.rohlik.spotify_degustator.storage.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,16 @@ public class DegustatorAPI {
         return degustatorService.checkSavedArtist();
     }
 
-    // TODO - PROGRESS
+    @GetMapping("/settings-check")
+    public Settings checkSetting() {
+        return degustatorService.checkSettings();
+    }
+
+    @GetMapping("/save/{id}")
+    public DegustatorArtist getArtistAndAlbums(@PathVariable String id) {
+        return degustatorService.saveArtist(id);
+    }
+
     @GetMapping("/generate-playlist")
     public List<Track> generatePlaylist() {
         return degustatorService.generatePlaylist();
