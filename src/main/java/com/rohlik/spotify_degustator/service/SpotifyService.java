@@ -119,6 +119,8 @@ public class SpotifyService {
         List<Artist> artistList = response.getBody().getArtists().getItems();
         log.info("Search completed. Found " + artistList.size() + " results.");
 
+        localStorage.setFoundArtists(artistList);
+
         for (int i = 0; i < artistList.size(); i++) {
             System.out.println(i + " Name: " + artistList.get(i).getName() +
                     "  ID: " + artistList.get(i).getId());

@@ -1,10 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>Artists</title>
+
+    <style>
+
+        body {
+            background-color: rgb(55, 55, 55);
+        }
+
+        .search {
+            text-align: center;
+            vertical-align: center;
+            padding-bottom: 10px;
+        }
+
+        input.button {
+            width: 6%;
+            height: inherit;
+        }
+
+        table.center {
+            margin-top: 14px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .as-text {
+            background:none;
+            border:none;
+            margin:0;
+            cursor: pointer;
+            padding-top: 1px;
+            padding-bottom: 1px;
+        }
+
+        table {
+            width: 80%;
+            background-color: white;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        tr {
+            margin-left: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00c95e;
+            font-size: 40pt;
+        }
+
+        h2 {
+            color: white;
+            font-size: 20pt;
+        }
+
+        .no-matches {
+            color: white;
+            font-size: 23pt;
+        }
+
+        input{
+            font-size: 16pt;
+            padding: 15px;
+            height: 20px;
+            width: 500px;
+            border:1px solid #eaeaea;
+            outline:none;
+        }
+
+    </style>
+
 </head>
+
 <body>
+
+<div class="container">
+    <h1>Spotify Degustator</h1>
+
+    <div class="search">
+        <h2>Search artists:</h2>
+        <form action="/search" method="post">
+            <input type="text" name="search_input"/>
+            <input class="button" type="submit" value="Go">
+        </form>
+    </div>
+
+    <div>
+        <table class="center">
+        <span class="no-matches" th:if="${artists.isEmpty() && first == false}">Found no matches.</span>
+            <tr th:each="artist : ${artists}">
+                <td>
+                    <form th:action="'/generate/' + ${artist.id}" method="post">
+                        <input class="as-text" type="submit" th:value="${artist.name}">
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
 
 </body>
 </html>

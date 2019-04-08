@@ -18,6 +18,7 @@ public class LocalStorage {
     private String token;
     private DegustatorArtist artist;
     private List<Track> trackList;
+    private List<Artist> foundArtists;
     private Settings settings = new Settings();
 
     public LocalStorage() {}
@@ -53,5 +54,13 @@ public class LocalStorage {
 
     public void setSettings(Settings settings) {
         this.settings = settings;
+    }
+
+    public List<Artist> getFoundArtists() {
+        return foundArtists;
+    }
+
+    public void setFoundArtists(List<Artist> foundArtists) {
+        this.foundArtists = foundArtists;
     }
 }

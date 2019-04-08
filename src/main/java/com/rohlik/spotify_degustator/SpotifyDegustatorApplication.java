@@ -26,6 +26,5 @@ public class SpotifyDegustatorApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         spotifyService.authorize();
-        degustatorService.saveArtist("4yvcSjfu4PC0CYQyLy4wSq");
     }
 }

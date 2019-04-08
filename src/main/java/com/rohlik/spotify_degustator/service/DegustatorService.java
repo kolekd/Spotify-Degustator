@@ -56,7 +56,7 @@ public class DegustatorService {
         List<Track> allTracks = new ArrayList<>();
         Artist artist = spotifyService.getArtist(id);
 
-        log.info("Saving artist ID: " + artist.getId());
+        log.info("Saving artist: " + artist.getName() + "   ID: " + artist.getId());
 
         for (Album album : spotifyService.getAlbumsByArtist(id).getItems()) {
             List<Track> tracksFromThisAlbum = spotifyService.getTracksFromAlbum(album.getId());

@@ -10,10 +10,9 @@
             background-color: rgb(55, 55, 55);
         }
 
-        .search {
-            text-align: center;
-            vertical-align: center;
-            padding-bottom: 10px;
+        a, a:visited, a:link, a:hover {
+            text-decoration: none;
+            color:inherit;
         }
 
         input.button {
@@ -48,13 +47,18 @@
 
         h1 {
             text-align: center;
-            color: #2ec900;
-            font-size: 35pt;
+            color: #00c95e;
+            font-size: 40pt;
+        }
+
+        h2 {
+            color: white;
+            font-size: 28pt;
+            text-align: center;
         }
 
         input{
             font-size: 16pt;
-            border: none;
             padding: 15px;
             height: 20px;
             width: 500px;
@@ -69,17 +73,17 @@
 <body>
 
 <div class="container">
-    <h1>Spotify Degustator</h1>
-
-    <div class="search">
-        <input type="text" />
-        <input class="button" type="submit" value="Go">
-    </div>
+    <h1><a href="index.html">Spotify Degustator</a></h1>
+    <h2 th:text="${artist.name}"/>
 
     <div>
         <table class="center">
-            <tr th:each="artist : ${artists}">
-                <td th:text="${artist.name}">Jack</td>
+            <tr th:each="track : ${tracks}">
+                <td>
+                    <a th:href="${track.externalUrls.spotify}"/>
+                        <p class="as-text" th:text="${track.name}"/>
+                    </a>
+                </td>
             </tr>
         </table>
     </div>
