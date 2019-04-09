@@ -16,11 +16,6 @@
             padding-bottom: 10px;
         }
 
-        input.button {
-            width: 6%;
-            height: inherit;
-        }
-
         table.center {
             margin-top: 14px;
             margin-left: auto;
@@ -30,10 +25,11 @@
         .as-text {
             background:none;
             border:none;
-            margin:0;
             cursor: pointer;
-            padding-top: 1px;
-            padding-bottom: 1px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            margin-left: 20px;
+            font-size: 24px;
         }
 
         table {
@@ -70,13 +66,26 @@
             font-size: 23pt;
         }
 
-        input{
+        input.input-text {
             font-size: 16pt;
-            padding: 15px;
+            padding: 16px;
             height: 20px;
             width: 500px;
             border:1px solid #eaeaea;
             outline:none;
+            vertical-align: center;
+        }
+
+        input.button {
+            background-color: rgb(232, 236, 238);
+            border: none;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            width: 6%;
+            vertical-align: center;
         }
 
     </style>
@@ -90,8 +99,8 @@
 
     <div class="search">
         <h2>Search artists:</h2>
-        <form action="/search" method="post">
-            <input type="text" name="search_input"/>
+        <form class="search-form" action="/search" method="post">
+            <input class="input-text" type="text" name="search_input"/>
             <input class="button" type="submit" value="Go">
         </form>
     </div>

@@ -15,6 +15,10 @@
             color:inherit;
         }
 
+        .list_link {
+            font-size: 16pt;
+        }
+
         input.button {
             width: 6%;
             height: inherit;
@@ -37,8 +41,8 @@
         }
 
         th, td {
-            padding: 10px;
-            font-size: 16pt;
+            padding-right: 10px;
+            padding-left: 10px;
         }
 
         tr {
@@ -80,7 +84,7 @@
         <table class="center">
             <tr th:each="track : ${tracks}">
                 <td>
-                    <a th:href="${track.externalUrls.spotify}"/>
+                    <a class="list_link" target="_blank" rel="noopener noreferrer" th:href="${track.externalUrls.spotify}"/>
                         <p class="as-text" th:text="${track.name}"/>
                     </a>
                 </td>
