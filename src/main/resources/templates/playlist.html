@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Artists</title>
+
+    <style>
+
+        body {
+            background-color: rgb(55, 55, 55);
+        }
+
+        a, a:visited, a:link, a:hover {
+            text-decoration: none;
+            color:inherit;
+        }
+
+        .list_link {
+            font-size: 16pt;
+        }
+
+        input.button {
+            width: 6%;
+            height: inherit;
+        }
+
+        table.center {
+            margin-top: 14px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        table {
+            width: 80%;
+            background-color: white;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+
+        tr {
+            margin-left: 15px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00c95e;
+            font-size: 40pt;
+        }
+
+        h2 {
+            color: white;
+            font-size: 28pt;
+            text-align: center;
+        }
+
+        input{
+            font-size: 16pt;
+            padding: 15px;
+            height: 20px;
+            width: 500px;
+            border:1px solid #eaeaea;
+            outline:none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+    <h1><a href="/">Spotify Degustator</a></h1>
+    <h2 th:text="${artist.name}"/>
+
+    <div>
+        <table class="center">
+            <tr th:each="track : ${tracks}">
+                <td>
+                    <a class="list_link" target="_blank" rel="noopener noreferrer" th:href="${track.externalUrls.spotify}"/>
+                        <p class="as-text" th:text="${track.name}"/>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>
